@@ -4,10 +4,53 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd" default-autowire="byName"
        default-lazy-init="false">
-    <!--注册任务器和触发器到schedule中-->
 
+
+    <!--自定义数据源-->
+    <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"-->
+          <!--init-method="init" destroy-method="close">-->
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
+        <!--<property name="url" value="jdbc:mysql://127.0.0.1:3306/batch" />-->
+        <!--<property name="username" value="cap" />-->
+        <!--<property name="password" value="cap" />-->
+        <!--&lt;!&ndash; 配置初始化大小、最小、最大 &ndash;&gt;-->
+        <!--<property name="initialSize" value="1" />-->
+        <!--<property name="minIdle" value="1" />-->
+        <!--<property name="maxActive" value="10" />-->
+
+        <!--&lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;-->
+        <!--<property name="maxWait" value="10000" />-->
+
+        <!--&lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;-->
+        <!--<property name="timeBetweenEvictionRunsMillis" value="60000" />-->
+
+        <!--&lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;-->
+        <!--<property name="minEvictableIdleTimeMillis" value="300000" />-->
+
+        <!--<property name="testWhileIdle" value="true" />-->
+
+        <!--&lt;!&ndash; 这里建议配置为TRUE，防止取到的连接不可用 &ndash;&gt;-->
+        <!--<property name="testOnBorrow" value="true" />-->
+        <!--<property name="testOnReturn" value="false" />-->
+
+        <!--&lt;!&ndash; 打开PSCache，并且指定每个连接上PSCache的大小 &ndash;&gt;-->
+        <!--<property name="poolPreparedStatements" value="true" />-->
+        <!--<property name="maxPoolPreparedStatementPerConnectionSize"-->
+                  <!--value="20" />-->
+
+        <!--&lt;!&ndash; 这里配置提交方式，默认就是TRUE，可以不用配置 &ndash;&gt;-->
+
+        <!--<property name="defaultAutoCommit" value="true" />-->
+
+        <!--&lt;!&ndash; 验证连接有效与否的SQL，不同的数据配置不同 &ndash;&gt;-->
+        <!--<property name="validationQuery" value="select 1 " />-->
+    <!--</bean>-->
+
+    <!--注册任务器和触发器到schedule中-->
     <bean id="scheduler" lazy-init="false" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
         <property name="applicationContextSchedulerContextKey" value="applicationContext"/>
+        <!--自定义数据源 使用此数据源需要注释掉quartaz.4中的数据源配置-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
         <property name="configLocation" value="classpath:04/quartz4.properties"/>
         <property name="overwriteExistingJobs" value="true"/>
         <property name="autoStartup" value="false"/>
